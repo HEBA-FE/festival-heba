@@ -40,8 +40,8 @@ export let Box = ({
     position: "absolute",
     marginTop: "20px",
     marginLeft: "-40px",
-    width: "60px", // 이미지의 너비를 조절할 수 있습니다.
-    height: "60px", // 이미지의 높이를 조절할 수 있습니다.
+    width: "60px",
+    height: "60px",
   };
 
   const personnumberStyle = {
@@ -98,13 +98,11 @@ function Admin() {
   };
 
   const handleButtonClick = (event, boxNumber) => {
-    event.stopPropagation(); // 버튼 클릭 이벤트 전파 중지
+    event.stopPropagation();
 
     if (selectedBoxes.includes(boxNumber)) {
-      // 이미 선택된 상자일 경우 선택 해제
       setSelectedBoxes(selectedBoxes.filter((number) => number !== boxNumber));
     } else {
-      // 선택되지 않은 상자일 경우 선택
       setSelectedBoxes([...selectedBoxes, boxNumber]);
     }
   };
@@ -154,16 +152,14 @@ function Admin() {
     let [currentDateTime, setCurrentDateTime] = useState(new Date());
 
     useEffect(() => {
-      // 1초마다 현재 날짜와 시간을 업데이트합니다.
       const intervalId = setInterval(() => {
         setCurrentDateTime(new Date());
       }, 1000);
 
-      // 컴포넌트가 언마운트되면 인터벌을 정리합니다.
       return () => clearInterval(intervalId);
-    }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행됩니다.
+    }, []);
 
-    const formattedDateTime = currentDateTime.toLocaleString(); // 현재 날짜와 시간을 지역 시간 형식으로 포맷합니다.
+    const formattedDateTime = currentDateTime.toLocaleString();
 
     return (
       <div>
@@ -172,22 +168,22 @@ function Admin() {
     );
   };
 
-  const [value, setValue] = useState(0); // 초기값을 0으로 설정
+  const [value, setValue] = useState(0);
 
   const increaseValue = () => {
-    setValue(value + 10); // 현재 값에 10을 더한 값으로 상태값 업데이트
+    setValue(value + 10);
   };
 
   const decreaseValue = () => {
-    setValue(value - 10); // 현재 값에서 10을 뺀 값으로 상태값 업데이트
+    setValue(value - 10);
   };
 
   const upValue = () => {
-    setValue(value + 1); // 현재 값에 1을 더한 값으로 상태값 업데이트
+    setValue(value + 1);
   };
 
   const downValue = () => {
-    setValue(value - 1); // 현재 값에서 1을 뺀 값으로 상태값 업데이트
+    setValue(value - 1);
   };
 
   const handlePopupClick = (type) => {
@@ -198,12 +194,12 @@ function Admin() {
 
   const openPopup = (type) => {
     setPopupType(type);
-    toggleModal(); // 팝업을 열 때 모달을 보이도록 설정
+    toggleModal();
   };
 
   const closePopup = () => {
     setPopupType(null);
-    toggleModal(); // 팝업을 닫을 때 모달을 숨기도록 설정
+    toggleModal();
     setSelectedBoxes([]);
     setValue(0);
   };
@@ -216,13 +212,13 @@ function Admin() {
 
   const exitPopup = () => {
     setPopupType(null);
-    toggleModal(); // 팝업을 닫을 때 모달을 숨기도록 설정
+    toggleModal();
   };
 
   const switchPopupClick = (type) => {
-    exitPopup(); // closePopup 함수 호출
+    exitPopup();
     setTimeout(() => {
-      setPopupType(type); // popupType 상태를 전달된 타입으로 업데이트하여 모달 창 열기
+      setPopupType(type);
     }, 0);
   };
 
@@ -251,6 +247,7 @@ function Admin() {
           </p>
           <img class="title-bell" src={Call} alt="Call Image" />
         </div>
+        {/*  알람 데이터 연결 */}
         <div className="alarm-container">
           {alarmData.map((item, index) => (
             <div key={index} className="alarm-item">
@@ -264,6 +261,7 @@ function Admin() {
         <div class="bottom-line"></div>
       </header>
       <div class="table-list">
+        {/* 각 테이블에 해당하는 인원수 데이터 연결 */}
         <div class="tableman">8</div>
         <div class="tablewom">8</div>
         <div class="tablecou">2</div>
@@ -295,6 +293,7 @@ function Admin() {
 
       <div class="box-lists">
         <div class="table-container">
+          {/* 각 박스에 인원수 및 고객 정보 연결 */}
           <Box
             number={1}
             value="woman"
@@ -337,7 +336,7 @@ function Admin() {
           />
           <Box
             number={6}
-            value="man" // 박스의 값(man, woman, mix, join, empty)을 여기에 전달
+            value="man"
             person="2"
             isSelected={selectedBoxes.includes(6)}
             onBoxClick={handleBoxClick}
@@ -561,7 +560,9 @@ function Admin() {
                   <div className="contentposi">
                     <div className="boxcontent">
                       <span className="boxvalue">인원수 : n</span>
+                      {/* 인원수 연결 */}
                       <br />
+                      {/*  입장,퇴장 시간연결 */}
                       <span className="boxvalue">입장시간 : 19:30</span>
                       <br />
                       <span className="boxvalue">퇴장시간 : 21:00</span>
