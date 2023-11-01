@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "styles/Admin.css";
-import CurrentDateTime from "components/CurrentDateTime";
-import Man from "assets/images/Man.svg";
-import Woman from "assets/images/Woman.svg";
-import Couple from "assets/images/Couple.svg";
-import Title from "assets/images/Title.svg";
-import Tiger from "assets/images/Tiger.svg";
-import Call from "assets/images/Call.svg";
+import "../styles/Admin.css";
+import "../styles/Font.css";
+import CurrentDateTime from "./CurrentDateTime";
+import Man from "../assets/images/Man.svg";
+import Woman from "../assets/images/Woman.svg";
+import Couple from "../assets/images/Couple.svg";
+import Title from "../assets/images/Title.svg";
+import Tiger from "../assets/images/Tiger.svg";
+import Call from "../assets/images/Call.svg";
 
 export let Box = ({
   number,
@@ -561,7 +562,7 @@ function Admin() {
                       <span className="boxvalue">인원수 : n</span>
                       {/* 인원수 연결 */}
                       <br />
-                      {/* 입장,퇴장 시간연결 */}
+                      {/*  입장,퇴장 시간연결 */}
                       <span className="boxvalue">입장시간 : 19:30</span>
                       <br />
                       <span className="boxvalue">퇴장시간 : 21:00</span>
