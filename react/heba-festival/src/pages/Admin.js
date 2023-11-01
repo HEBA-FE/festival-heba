@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Admin.css";
-import "../styles/Font.css";
-import CurrentDateTime from "./CurrentDateTime";
-import Man from "../assets/images/Man.svg";
-import Woman from "../assets/images/Woman.svg";
-import Couple from "../assets/images/Couple.svg";
-import Title from "../assets/images/Title.svg";
-import Tiger from "../assets/images/Tiger.svg";
-import Call from "../assets/images/Call.svg";
+import "styles/Admin.css";
+import CurrentDateTime from "components/CurrentDateTime";
+import Man from "assets/images/Man.svg";
+import Woman from "assets/images/Woman.svg";
+import Couple from "assets/images/Couple.svg";
+import Title from "assets/images/Title.svg";
+import Tiger from "assets/images/Tiger.svg";
+import Call from "assets/images/Call.svg";
 
 export let Box = ({
   number,
   value,
   isSelected,
   person,
+  time,
   onBoxClick,
   onButtonClick,
 }) => {
@@ -46,9 +46,10 @@ export let Box = ({
 
   const personnumberStyle = {
     position: "absolute",
-    marginTop: "32px",
+    marginTop: "28px",
     marginLeft: "30px",
-    fontSize: "2.5rem",
+    fontSize: "4rem",
+    fontWeight: "800",
   };
   const buttonStyle = {
     backgroundColor: isSelected ? "black" : color,
@@ -59,6 +60,13 @@ export let Box = ({
     position: "absolute",
     top: "10px",
     left: "120px",
+  };
+  const timeStyle = {
+    position: "absolute",
+    marginTop: "75px",
+    marginLeft: "-32px",
+    fontSize: "2.5rem",
+    fontWeight: "800",
   };
 
   const handleButtonClick = (event, boxNumber) => {
@@ -74,6 +82,7 @@ export let Box = ({
       {person !== 0 && person !== "0" && (
         <span style={personnumberStyle}>{person} </span>
       )}
+      <span style={timeStyle}>{time} </span>
     </div>
   );
 };
@@ -84,6 +93,33 @@ function Admin() {
   const [selectedBox, setSelectedBox] = useState(null);
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   const [boxtext, setBoxText] = useState("");
+
+  const boxData = Array.from({ length: 30 }, (_, index) => {
+    const number = index + 1;
+    const value =
+      index % 6 === 0
+        ? "woman"
+        : index % 6 === 1
+        ? "man"
+        : index % 6 === 2
+        ? "mix"
+        : index % 6 === 3
+        ? "join"
+        : "empty";
+    const person = value === "empty" ? "" : value === "mix" ? "3" : "2";
+    const time = value === "empty" ? "" : "19:30"; // 예시 시간, 필요에 따라 수정하세요
+    return { number, value, person, time };
+  });
+
+  const boxesPerRow = 6;
+  const totalRows = Math.ceil(boxData.length / boxesPerRow);
+
+  const arrangedBoxData = Array.from({ length: totalRows }, (_, rowIndex) => {
+    const start = rowIndex * boxesPerRow;
+    const end = start + boxesPerRow;
+    const rowBoxes = boxData.slice(start, end);
+    return rowBoxes;
+  });
 
   const handleBoxClick = (boxNumber) => {
     setSelectedBox(boxNumber);
@@ -262,11 +298,11 @@ function Admin() {
       </header>
       <div class="table-list">
         {/* 각 테이블에 해당하는 인원수 데이터 연결 */}
-        <div class="tableman">8</div>
-        <div class="tablewom">8</div>
-        <div class="tablecou">2</div>
-        <div class="tablemix">7</div>
-        <div class="tableemp">5</div>
+        <div class="tableman">5</div>
+        <div class="tablewom">5</div>
+        <div class="tablecou">5</div>
+        <div class="tablemix">5</div>
+        <div class="tableemp">10</div>
       </div>
 
       <div class="admin_nav">
@@ -292,256 +328,30 @@ function Admin() {
       </div>
 
       <div class="box-lists">
-        <div class="table-container">
-          {/* 각 박스에 인원수 및 고객 정보 연결 */}
-          <Box
-            number={1}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(1)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={2}
-            value=""
-            person=""
-            isSelected={selectedBoxes.includes(2)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={3}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(3)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={4}
-            value="mix"
-            person="3"
-            isSelected={selectedBoxes.includes(4)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={5}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(5)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={6}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(6)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-        </div>
-        <div class="table-container">
-          <Box
-            number={7}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(7)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={8}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(8)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={9}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(9)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={10}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(10)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={11}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(11)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={12}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(12)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-        </div>
-        <div class="table-container">
-          <Box
-            number={13}
-            value="empty"
-            person=""
-            isSelected={selectedBoxes.includes(13)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={14}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(14)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={15}
-            value=""
-            person=""
-            isSelected={selectedBoxes.includes(15)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={16}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(16)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={17}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(17)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={18}
-            value=""
-            person=""
-            isSelected={selectedBoxes.includes(18)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-        </div>
-        <div class="table-container">
-          <Box
-            number={19}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(19)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={20}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(20)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={21}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(21)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={22}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(22)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={23}
-            value="join"
-            person="4"
-            isSelected={selectedBoxes.includes(23)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={24}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(24)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-        </div>
-        <div class="table-container">
-          <Box
-            number={25}
-            value="woman"
-            person="2"
-            isSelected={selectedBoxes.includes(25)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={26}
-            value="man"
-            person="4"
-            isSelected={selectedBoxes.includes(26)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={27}
-            value=""
-            person="0"
-            isSelected={selectedBoxes.includes(27)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={28}
-            value="mix"
-            person="2"
-            isSelected={selectedBoxes.includes(28)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={29}
-            value="man"
-            person="2"
-            isSelected={selectedBoxes.includes(29)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
-          <Box
-            number={30}
-            value="join"
-            person="2"
-            isSelected={selectedBoxes.includes(30)}
-            onBoxClick={handleBoxClick}
-            onButtonClick={handleButtonClick}
-          />
+        <div className="table-container">
+          {Array.from({ length: boxesPerRow }, (_, columnIndex) => (
+            <div className="table-column" key={columnIndex}>
+              {Array.from({ length: totalRows }, (_, rowIndex) => {
+                const boxIndex = rowIndex * boxesPerRow + columnIndex;
+                const box = boxData[boxIndex];
+                if (box) {
+                  return (
+                    <Box
+                      key={box.number}
+                      number={box.number}
+                      value={box.value}
+                      person={box.person}
+                      time={box.time}
+                      isSelected={selectedBoxes.includes(box.number)}
+                      onBoxClick={handleBoxClick}
+                      onButtonClick={handleButtonClick}
+                    />
+                  );
+                }
+                return null;
+              })}
+            </div>
+          ))}
         </div>
       </div>
       {isModalVisible && (
@@ -562,7 +372,7 @@ function Admin() {
                       <span className="boxvalue">인원수 : n</span>
                       {/* 인원수 연결 */}
                       <br />
-                      {/*  입장,퇴장 시간연결 */}
+                      {/* 입장,퇴장 시간연결 */}
                       <span className="boxvalue">입장시간 : 19:30</span>
                       <br />
                       <span className="boxvalue">퇴장시간 : 21:00</span>
